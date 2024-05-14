@@ -1,0 +1,17 @@
+version: '2.2'
+
+services:
+  app:
+    image: ghcr.io/anh4n/skyjo:${TAG:-latest}
+    container_name: mtg-collection-manager
+    labels:
+      traefik.http.routers.mtgCollectionManager.rule: "Host(`skyjo.xhttp.de`)"
+      traefik.http.routers.mtgCollectionManager.tls.certresolver: "letsencrypt"
+      traefik.http.routers.mtgCollectionManager.entrypoints: "websecure"
+      traefik.http.services.mtgCollectionManager.loadbalancer.server.port: "80"
+    init: true
+
+networks:
+  default:
+    external:
+      name: reverse_proxy
