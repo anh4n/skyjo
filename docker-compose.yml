@@ -3,12 +3,12 @@ version: '2.2'
 services:
   app:
     image: ghcr.io/anh4n/skyjo:${TAG:-latest}
-    container_name: mtg-collection-manager
+    container_name: skyjo
     labels:
-      traefik.http.routers.mtgCollectionManager.rule: "Host(`skyjo.xhttp.de`)"
-      traefik.http.routers.mtgCollectionManager.tls.certresolver: "letsencrypt"
-      traefik.http.routers.mtgCollectionManager.entrypoints: "websecure"
-      traefik.http.services.mtgCollectionManager.loadbalancer.server.port: "80"
+      traefik.http.routers.skyjo.rule: "Host(`skyjo.xhttp.de`)"
+      traefik.http.routers.skyjo.tls.certresolver: "letsencrypt"
+      traefik.http.routers.skyjo.entrypoints: "websecure"
+      traefik.http.services.skyjo.loadbalancer.server.port: "80"
     init: true
 
 networks:
