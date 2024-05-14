@@ -51,7 +51,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to server
-        uses: anh4n/docker-deployment-action@v2
+        uses: anh4n/docker-deployment-action@v2.1
         with:
           host: 'xhttp.de'
           ca-pem: ${{secrets.CA_PEM}}
