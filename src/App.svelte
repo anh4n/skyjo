@@ -8,7 +8,9 @@
 </script>
 
 <div class="container">
-    <h1 class="text-center">SKYJO</h1>
+    <div class='text-center p-1'>
+        <img src='/logo.jpeg' alt='logo' style='max-height: 50px'/>
+    </div>
     {#if $currentPageStore === 'start' }
         <StartPage/>
     {:else if $currentPageStore === 'game'}

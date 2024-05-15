@@ -34,7 +34,8 @@
                 }
 
                 val += round;
-                data[index].push(val);
+                const prefix = round > 0 ? '+' : '';
+                data[index].push({ sum: val, prefix, round });
             });
         });
 
@@ -47,16 +48,24 @@
     <tr>
         <th scope="col">#</th>
         {#each $playersStore as player (player.id)}
-            <th scope="col">{player.name}</th>
+            <th scope="col" class='text-end'>
+                {player.name}
+            </th>
         {/each}
     </tr>
     </thead>
-    <tbody>
+    <tbody class='table-group-divider'>
     {#each rounds as round, index}
         <tr>
-            <th scope="row">{index}</th>
+            <th scope="row">{index + 1}</th>
             {#each round as playerValue}
-                <td>{playerValue}</td>
+                <td>
+                    <div class='d-flex justify-content-end'>
+                        <div style='width: 35px' class='text-end'>{playerValue.sum}</div>
+                        <div style='width: 55px' class='text-end fst-italic'>({playerValue.prefix}{playerValue.round})
+                        </div>
+                    </div>
+                </td>
             {/each}
         </tr>
     {/each}

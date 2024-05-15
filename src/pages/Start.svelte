@@ -22,7 +22,8 @@
         const playersValues = players.map(player => ({
             id: player.id,
             name: player.value || player.placeholder,
-            data: []
+            data: [],
+            currentValue: null
         }));
         playersStore.set(playersValues);
         localStorage.setItem('players', JSON.stringify(playersValues));
