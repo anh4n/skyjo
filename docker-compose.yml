@@ -3,7 +3,7 @@ version: '2.2'
 services:
   app:
     image: ghcr.io/anh4n/skyjo:${TAG:-latest}
-    container_name: skyjo
+    container_name: skyjo-calculator
     labels:
       traefik.http.routers.skyjo.rule: "Host(`skyjo.xhttp.de`)"
       traefik.http.routers.skyjo.tls.certresolver: "letsencrypt"
