@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-    import { playersStore } from '../store.js';
+    import { playersScoreStore } from '../store.js';
 
     let roundClosed;
 
@@ -9,7 +9,7 @@
     const onSaveClick = () => {
         const values = {};
 
-        $playersStore.forEach(player => {
+        $playersScoreStore.forEach(player => {
             values[player.id] = player.currentValue;
         });
 
@@ -37,7 +37,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {#each $playersStore as player (player.id)}
+                    {#each $playersScoreStore as player (player.id)}
                         <tr>
                             <th class='align-middle' scope="col">{player.name}</th>
                             <td>

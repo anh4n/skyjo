@@ -1,11 +1,23 @@
 <script>
+    import { onMount } from 'svelte';
+
     export let addText = 'Add field';
     export let placeholderPrefix = 'Field';
-    export let value = [
+    const defaultValue = [
         { id: 1, placeholder: `${placeholderPrefix} 1`, value: '' },
         { id: 2, placeholder: `${placeholderPrefix} 2`, value: '' },
         { id: 3, placeholder: `${placeholderPrefix} 3`, value: '' }
     ];
+    export let value = defaultValue;
+    export const reset = () => {
+        value = defaultValue;
+    };
+
+    onMount(() => {
+        if (value.length === 0) {
+            value = defaultValue;
+        }
+    });
 
     const addField = () => {
         const id = value[value.length - 1].id + 1;

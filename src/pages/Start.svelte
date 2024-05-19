@@ -1,17 +1,14 @@
 <script>
     import ListField from '../components/ListField.svelte';
-    import { currentPageStore, playersStore } from '../store.js';
+    import { playersScoreStore } from '../store.js';
+    import { Navigator } from '../navigator.js';
 
-    const defaults = [
-        { id: 1, placeholder: 'Spieler 1', value: '' },
-        { id: 2, placeholder: 'Spieler 2', value: '' },
-        { id: 3, placeholder: 'Spieler 3', value: '' }
-    ];
+    let listField;
 
-    let players = defaults;
+    let players = [];
 
-    if ($playersStore.length > 0) {
-        players = $playersStore.map(player => ({
+    if ($playersScoreStore.length > 0) {
+        players = $playersScoreStore.map(player => ({
             id: player.id,
             placeholder: player.name,
             value: ''
@@ -25,20 +22,18 @@
             data: [],
             currentValue: null
         }));
-        playersStore.set(playersValues);
-        localStorage.setItem('players', JSON.stringify(playersValues));
-        currentPageStore.set('game');
+        playersScoreStore.setPlayers(playersValues);
+        Navigator.setPage('game');
     };
 
-    const onResetClick = (e) => {
-        playersStore.set([]);
-        localStorage.removeItem('players');
-        players = defaults;
+    const onResetClick = () => {
+        listField.reset();
+        playersScoreStore.reset();
     };
 </script>
 
 <form>
-    <ListField bind:value={players} addText='Spieler hinzufügen' placeholderPrefix='Spieler'/>
+    <ListField bind:value={players} addText='Spieler hinzufügen' placeholderPrefix='Spieler' bind:this={listField}/>
 
     <div class="d-flex mb-3">
         <button on:click|preventDefault={startGame} type="submit" class="btn btn-outline-success btn-lg">
