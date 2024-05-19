@@ -1,6 +1,8 @@
 <script>
     import { onMount } from 'svelte';
 
+    export let minFields = null;
+    export let maxFields = null;
     export let addText = 'Add field';
     export let placeholderPrefix = 'Field';
     const defaultValue = [
@@ -13,6 +15,9 @@
         value = defaultValue;
     };
 
+    $: canHaveMoreFields = maxFields === null || value.length < maxFields;
+    $: canHaveLessFields = minFields === null || value.length > minFields;
+
     onMount(() => {
         if (value.length === 0) {
             value = defaultValue;
@@ -20,20 +25,25 @@
     });
 
     const addField = () => {
-        const id = value[value.length - 1].id + 1;
-        value = [
-            ...value,
-            { id, placeholder: `${placeholderPrefix} ${id}`, value: '' }
-        ];
+        if (canHaveMoreFields) {
+            const lastField = value[value.length - 1];
+            const id = lastField ? value[value.length - 1].id + 1 : 1;
+            value = [
+                ...value,
+                { id, placeholder: `${placeholderPrefix} ${id}`, value: '' }
+            ];
+        }
     };
 
     const removeField = (id) => {
-        const index = value.findIndex(field => field.id === id);
+        if (canHaveLessFields) {
+            const index = value.findIndex(field => field.id === id);
 
-        value = [
-            ...value.slice(0, index),
-            ...value.slice(index + 1)
-        ];
+            value = [
+                ...value.slice(0, index),
+                ...value.slice(index + 1)
+            ];
+        }
     };
 
     const handleKeyPress = (e) => {
@@ -55,18 +65,21 @@
                     class="form-control"
                     tabindex={field.id}
             />
-            <button
-                    on:click={removeField.bind(null, field.id)}
-                    type="button"
-                    class="btn"
-            >
-                <i class="bi bi-x-circle" style='color: red'></i>
-            </button>
+            {#if canHaveLessFields}
+                <button
+                        on:click={removeField.bind(null, field.id)}
+                        type="button"
+                        class="btn"
+                >
+                    <i class="bi bi-x-circle" style='color: red'></i>
+                </button>
+            {/if}
         </div>
     </div>
 {/each}
 <div class="mb-3 d-grid gap-2">
-    <button on:click={addField} type="button" class="btn btn-outline-secondary add-player-button">
+    <button on:click={addField} disabled={!canHaveMoreFields} type="button"
+            class="btn btn-outline-secondary add-player-button">
         {addText}
     </button>
 </div>

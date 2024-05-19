@@ -32,9 +32,20 @@
     };
 </script>
 
+<div class='text-center pb-3'>
+    <span class='badge text-bg-secondary'>Alter: ab 8 Jahren</span>
+    <span class='badge text-bg-secondary'>Spieler: 2 bis 8</span>
+    <span class='badge text-bg-secondary'>Dauer: 15-45 Minuten</span>
+</div>
 <form>
-    <ListField bind:value={players} addText='Spieler hinzufügen' placeholderPrefix='Spieler' bind:this={listField}/>
-
+    <ListField
+            bind:value={players}
+            addText='Spieler hinzufügen'
+            placeholderPrefix='Spieler'
+            bind:this={listField}
+            minFields=2
+            maxFields=8
+    />
     <div class="d-flex mb-3">
         <button on:click|preventDefault={startGame} type="submit" class="btn btn-outline-success btn-lg">
             Spiel starten
