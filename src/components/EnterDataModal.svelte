@@ -41,7 +41,7 @@
                         <tr>
                             <th class='align-middle' scope="col">{player.name}</th>
                             <td>
-                                <input bind:value={player.currentValue} class="align-middle form-control" type="number">
+                                <input bind:value={player.currentValue} class="align-middle form-control" type="number" tabindex={player.id}>
                             </td>
                             <td class='text-center'>
                                 <input bind:group={roundClosed} value={player.id} class="align-middle form-check-input"

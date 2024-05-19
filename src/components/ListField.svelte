@@ -49,10 +49,11 @@
             <input
                     bind:value={field.value}
                     placeholder={field.placeholder}
-                    on:keypress={handleKeyPress}
+                    on:keypress|preventDefault={handleKeyPress}
                     autofocus
                     type="text"
                     class="form-control"
+                    tabindex={field.id}
             />
             <button
                     on:click={removeField.bind(null, field.id)}
