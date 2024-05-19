@@ -6,6 +6,14 @@
 
     const dispatch = createEventDispatcher();
 
+    const onModalOpen = () => {
+        playersScoreStore.update(store =>
+            store.map(player => ({
+                ...player,
+                currentValue: null
+            })));
+    };
+
     const onSaveClick = () => {
         const values = {};
 
@@ -20,7 +28,7 @@
     };
 </script>
 
-<div class="modal fade" id="dataEnterModal">
+<div class="modal fade" id="dataEnterModal" on:show.bs.modal={onModalOpen}>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -41,11 +49,18 @@
                         <tr>
                             <th class='align-middle' scope="col">{player.name}</th>
                             <td>
-                                <input bind:value={player.currentValue} class="align-middle form-control" type="number" tabindex={player.id}>
+                                <input bind:value={player.currentValue}
+                                       class="align-middle form-control"
+                                       type="number"
+                                       tabindex={player.id}
+                                >
                             </td>
                             <td class='text-center'>
-                                <input bind:group={roundClosed} value={player.id} class="align-middle form-check-input"
-                                       type="radio">
+                                <input bind:group={roundClosed}
+                                       value={player.id}
+                                       class="align-middle form-check-input"
+                                       type="radio"
+                                >
                             </td>
                         </tr>
                     {/each}
@@ -53,7 +68,9 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button on:click|preventDefault={onSaveClick} type="button" data-bs-dismiss="modal" class="btn btn-primary">Speichern</button>
+                <button on:click|preventDefault={onSaveClick} type="button" data-bs-dismiss="modal"
+                        class="btn btn-primary">Speichern
+                </button>
             </div>
         </div>
     </div>

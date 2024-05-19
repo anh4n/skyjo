@@ -7,6 +7,7 @@ const createPlayerScoreStore = () => {
     return {
         subscribe,
         set,
+        update,
         init: () => {
             const players = localStorage.getItem('players');
             set(players ? JSON.parse(players) : []);
