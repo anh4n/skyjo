@@ -5,14 +5,14 @@
     export let maxFields = null;
     export let addText = 'Add field';
     export let placeholderPrefix = 'Field';
-    const defaultValue = [
+    const createDefaultValue = () => ([
         { id: 1, placeholder: `${placeholderPrefix} 1`, value: '' },
         { id: 2, placeholder: `${placeholderPrefix} 2`, value: '' },
         { id: 3, placeholder: `${placeholderPrefix} 3`, value: '' }
-    ];
-    export let value = defaultValue;
+    ]);
+    export let value = createDefaultValue();
     export const reset = () => {
-        value = defaultValue;
+         value = createDefaultValue();
     };
 
     $: canHaveMoreFields = maxFields === null || value.length < maxFields;
@@ -20,7 +20,7 @@
 
     onMount(() => {
         if (value.length === 0) {
-            value = defaultValue;
+            value = createDefaultValue();
         }
     });
 

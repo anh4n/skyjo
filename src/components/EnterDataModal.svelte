@@ -12,6 +12,7 @@
                 ...player,
                 currentValue: null
             })));
+        roundClosed = null;
     };
 
     const onSaveClick = () => {
