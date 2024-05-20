@@ -49,6 +49,7 @@
     const handleKeyPress = (e) => {
         if ('Enter' === e.key) {
             addField();
+            e.preventDefault();
         }
     };
 </script>
@@ -59,7 +60,7 @@
             <input
                     bind:value={field.value}
                     placeholder={field.placeholder}
-                    on:keypress|preventDefault={handleKeyPress}
+                    on:keypress={handleKeyPress}
                     autofocus
                     type="text"
                     class="form-control"
