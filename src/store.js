@@ -16,12 +16,12 @@ const createPlayerScoreStore = () => {
             set(playersValues);
             localStorage.setItem('players', JSON.stringify(playersValues));
         },
-        updateScore: (values) => {
+        updateScore: (values, roundClosed) => {
             update(store => {
                 const newStore = store.map(player => {
                     return ({
                         ...player,
-                        data: [...player.data, values[player.id]]
+                        data: [...player.data, { points: values[player.id], hasClosedRound: player.id === roundClosed }]
                     });
                 });
 
@@ -33,14 +33,14 @@ const createPlayerScoreStore = () => {
             const data = [];
             get(store).forEach(player => {
                 let val = 0;
-                player.data.forEach((round, index) => {
+                player.data.forEach(({points, hasClosedRound}, index) => {
                     if (!data[index]) {
                         data[index] = [];
                     }
 
-                    val += round;
-                    const prefix = round > 0 ? '+' : '';
-                    data[index].push({ sum: val, prefix, round });
+                    val += points;
+                    const prefix = points > 0 ? '+' : '';
+                    data[index].push({ sum: val, prefix, round: points, hasClosedRound });
                 });
             });
 

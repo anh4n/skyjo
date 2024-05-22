@@ -1,6 +1,6 @@
 export const getPlayersRanked = (store) => {
     let players = store.map(player => {
-        let sum = player.data.reduce((sum, x) => sum + x, 0);
+        let sum = player.data.reduce((sum, x) => sum + x.points, 0);
         return { player: player.id, sum, rank: null };
     });
 
@@ -15,8 +15,4 @@ export const getPlayersRanked = (store) => {
     }
 
     return players;
-}
-
-export const isGameOver = (players) => {
-    return players.some(p => p.sum >= 100);
 }
