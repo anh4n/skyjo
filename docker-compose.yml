@@ -5,7 +5,7 @@ services:
     image: ghcr.io/anh4n/skyjo:${TAG:-latest}
     container_name: skyjo-calculator
     labels:
-      traefik.http.routers.skyjo.rule: "Host(`skyjo.xhttp.de`)"
+      traefik.http.routers.skyjo.rule: "Host(`skyjo.haneland.de`) || Host(`skyjo.xhttp.de`)"
       traefik.http.routers.skyjo.tls.certresolver: "letsencrypt"
       traefik.http.routers.skyjo.entrypoints: "websecure"
       traefik.http.services.skyjo.loadbalancer.server.port: "80"
