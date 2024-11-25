@@ -27,6 +27,10 @@
 
         playersScoreStore.updateScore(values, roundClosed);
     };
+
+    const getRank = (player) => {
+        return players.find(p => p.player === player.id).rank
+    }
 </script>
 
 <table class="table table-striped">
@@ -37,8 +41,13 @@
             <th scope="col" class='text-end'>
                 {player.name}
                 {#if rounds.length > 0}
-                    <span class="badge rounded-pill text-bg-dark">{players.find(p => p.player === player.id).rank}
-                        .</span>
+                    <span
+                            class="badge rounded-pill "
+                            class:first-place={getRank(player) === 1}
+                            class:second-place={getRank(player) === 2}
+                            class:third-place={getRank(player) === 3}
+                            class:text-bg-dark={getRank(player) > 3}
+                    >{getRank(player)}.</span>
                 {/if}
             </th>
         {/each}
