@@ -1,4 +1,31 @@
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
+
+const createRoundStore = () => {
+    const store = writable([]);
+    const { subscribe, set, update } = store;
+
+    return {
+        subscribe,
+        set,
+        update,
+        init: () => {
+            const rounds = localStorage.getItem('rounds');
+            set(rounds ? JSON.parse(rounds) : []);
+        },
+        reset: () => {
+            set([]);
+            localStorage.removeItem('rounds');
+        },
+        addRound: (values, roundClosed, doublePoints) => {
+            update(store => {
+                const newStore = store.map(v => v);
+                newStore.push({ values, roundClosed, doublePoints });
+                localStorage.setItem('rounds', JSON.stringify(newStore));
+                return newStore;
+            });
+        }
+    };
+};
 
 const createPlayerScoreStore = () => {
     const store = writable([]);
@@ -16,35 +43,22 @@ const createPlayerScoreStore = () => {
             set(playersValues);
             localStorage.setItem('players', JSON.stringify(playersValues));
         },
-        updateScore: (values, roundClosed) => {
+        updateSum: (values) => {
             update(store => {
-                const newStore = store.map(player => {
-                    return ({
+                const newStore = store.map(player =>
+                    ({
                         ...player,
-                        data: [...player.data, { points: values[player.id], hasClosedRound: player.id === roundClosed }]
-                    });
+                        sum: (player.sum || 0) + values[player.id]
+                    }));
+
+                const sortStore = newStore.map(v => v).sort((a, b) => a.sum - b.sum);
+                sortStore.forEach((player, index) => {
+                    newStore.find(v => v.id === player.id).rank = index + 1;
                 });
 
                 localStorage.setItem('players', JSON.stringify(newStore));
                 return newStore;
             });
-        },
-        getRounds: () => {
-            const data = [];
-            get(store).forEach(player => {
-                let val = 0;
-                player.data.forEach(({points, hasClosedRound}, index) => {
-                    if (!data[index]) {
-                        data[index] = [];
-                    }
-
-                    val += points;
-                    const prefix = points > 0 ? '+' : '';
-                    data[index].push({ sum: val, prefix, round: points, hasClosedRound });
-                });
-            });
-
-            return Object.values(data);
         },
         reset: () => {
             set([]);
@@ -54,4 +68,5 @@ const createPlayerScoreStore = () => {
 };
 
 export const playersScoreStore = createPlayerScoreStore();
+export const roundStore = createRoundStore();
 

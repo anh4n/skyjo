@@ -1,10 +1,11 @@
 <script>
     import StartPage from './pages/Start.svelte';
     import GamePage from './pages/Game.svelte';
-    import { playersScoreStore } from './store.js';
+    import { playersScoreStore, roundStore } from './store.js';
     import { Navigator } from './navigator.js';
 
     playersScoreStore.init();
+    roundStore.init();
 
     const page = Navigator.getPage();
 </script>

@@ -1,16 +1,10 @@
 <script>
-    import { playersScoreStore } from '../store.js';
+    import { playersScoreStore, roundStore } from '../store.js';
     import EnterDataModal from '../components/EnterDataModal.svelte';
     import { Navigator } from '../navigator.js';
     import { beforeUpdate } from 'svelte';
-    import { getPlayersRanked } from '../calculation-service.js';
-
-    let rounds = [];
-    let players = [];
 
     beforeUpdate(() => {
-        rounds = playersScoreStore.getRounds();
-        players = getPlayersRanked($playersScoreStore);
     });
 
     const onNewGameClick = () => {
@@ -20,17 +14,22 @@
     const onDataEnter = (e) => {
         const { roundClosed, values } = e.detail;
         const minValue = Math.min(...Object.values(values));
+        let doublePoints = false;
 
         if (minValue < values[roundClosed]) {
             values[roundClosed] *= 2;
+            doublePoints = true;
         }
-
-        playersScoreStore.updateScore(values, roundClosed);
+        playersScoreStore.updateSum(values);
+        roundStore.addRound(values, roundClosed, doublePoints);
     };
 
-    const getRank = (player) => {
-        return players.find(p => p.player === player.id).rank
-    }
+    const checkCloser = (playerId, round) => {
+        const id = parseInt(playerId, 10);
+        return $roundStore.some((roundData, index) => {
+            return roundData.roundClosed === id && index === round;
+        });
+    };
 </script>
 
 <table class="table table-striped">
@@ -40,28 +39,35 @@
         {#each $playersScoreStore as player (player.id)}
             <th scope="col" class='text-end'>
                 {player.name}
-                {#if rounds.length > 0}
+                {#if $roundStore.length > 0}
                     <span
                             class="badge rounded-pill "
-                            class:first-place={getRank(player) === 1}
-                            class:second-place={getRank(player) === 2}
-                            class:third-place={getRank(player) === 3}
-                            class:text-bg-dark={getRank(player) > 3}
-                    >{getRank(player)}.</span>
+                            class:first-place={player.rank === 1}
+                            class:second-place={player.rank === 2}
+                            class:third-place={player.rank === 3}
+                            class:text-bg-dark={player.rank > 3}
+                    >{player.rank}.</span>
                 {/if}
             </th>
         {/each}
     </tr>
     </thead>
     <tbody class='table-group-divider'>
-    {#each rounds as round, index}
+    {#each $roundStore as round, index}
         <tr>
-            <th scope="row" class='align-middle'>{index + 1}</th>
-            {#each round as playerValue}
-                <td class:text-bg-danger={playerValue.sum >= 100} class='align-middle'>
-                    <div class='d-flex justify-content-end' class:fw-bold={playerValue.hasClosedRound}>
-                        <div style='width: 35px' class='text-end '>{playerValue.sum}</div>
-                        <div style='width: 55px' class='text-end fst-italic'>({playerValue.prefix}{playerValue.round})
+            <th scope="row">{index + 1}</th>
+            {#each Object.keys(round.values) as playerId}
+                <td>
+                    <div class='d-flex justify-content-end'>
+                        <div
+                                class='text-end points'
+                                class:text-primary={checkCloser(playerId, index) && !round.doublePoints}
+                                class:text-danger={checkCloser(playerId, index) && round.doublePoints}
+                        >
+                            {round.values[playerId]}
+                        </div>
+                        <div style='width: 35px' class='text-end'>
+                            {#if checkCloser(playerId, index) && round.doublePoints}({round.values[playerId] / 2}){/if}
                         </div>
                     </div>
                 </td>
@@ -69,6 +75,21 @@
         </tr>
     {/each}
     </tbody>
+    <tfoot class='table-group-divider'>
+    <tr>
+        <th scope="col">Summe</th>
+        {#each $playersScoreStore as player (player.id)}
+            <td>
+                <div class='d-flex justify-content-end'>
+                    <div class='text-end fw-bold points' class:text-bg-danger={player.sum >= 100}>
+                        { player.sum }
+                    </div>
+                    <div style='width: 35px' class='text-end'></div>
+                </div>
+            </td>
+        {/each}
+    </tr>
+    </tfoot>
 </table>
 
 <div class="d-flex mb-3">

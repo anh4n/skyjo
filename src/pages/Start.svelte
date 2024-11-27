@@ -1,6 +1,6 @@
 <script>
     import ListField from '../components/ListField.svelte';
-    import { playersScoreStore } from '../store.js';
+    import { playersScoreStore, roundStore } from '../store.js';
     import { Navigator } from '../navigator.js';
 
     let listField;
@@ -19,16 +19,18 @@
         const playersValues = players.map(player => ({
             id: player.id,
             name: player.value || player.placeholder,
-            data: [],
-            currentValue: null
+            sum: 0,
+            rank: 0
         }));
         playersScoreStore.setPlayers(playersValues);
+        roundStore.reset();
         Navigator.setPage('game');
     };
 
     const onResetClick = () => {
         listField.reset();
         playersScoreStore.reset();
+        roundStore.reset();
     };
 </script>
 
