@@ -1,5 +1,25 @@
 import { writable } from 'svelte/store';
 
+const rankPlayers = (players) => {
+    // Kopie des Arrays erstellen und nach `sum` sortieren
+    const sortedPlayers = [...players].sort((a, b) => a.sum - b.sum);
+
+    // Ränge berechnen
+    let currentRank = 1;
+    sortedPlayers.forEach((player, index) => {
+        if (index > 0 && player.sum !== sortedPlayers[index - 1].sum) {
+            currentRank = index + 1;
+        }
+        player.rank = currentRank;
+    });
+
+    // Ränge in das ursprüngliche Array übertragen
+    players.forEach(player => {
+        const rankedPlayer = sortedPlayers.find(p => p.id === player.id);
+        player.rank = rankedPlayer.rank;
+    });
+};
+
 const createRoundStore = () => {
     const store = writable([]);
     const { subscribe, set, update } = store;
@@ -51,10 +71,7 @@ const createPlayerScoreStore = () => {
                         sum: (player.sum || 0) + values[player.id]
                     }));
 
-                const sortStore = newStore.map(v => v).sort((a, b) => a.sum - b.sum);
-                sortStore.forEach((player, index) => {
-                    newStore.find(v => v.id === player.id).rank = index + 1;
-                });
+                rankPlayers(newStore);
 
                 localStorage.setItem('players', JSON.stringify(newStore));
                 return newStore;
