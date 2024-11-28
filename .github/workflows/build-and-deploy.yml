@@ -30,9 +30,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
+          build-args: |
+            GIT_COMMIT=$(git rev-parse --short HEAD)
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
   docker-deploy:
