@@ -13,10 +13,14 @@
 <div class="container">
     <div class='text-center p-1'>
         <img src='/logo.jpeg' alt='logo' style='max-height: 50px'/>
+
     </div>
     {#if page === 'start' }
         <StartPage/>
     {:else if page === 'game'}
         <GamePage/>
     {/if}
+</div>
+<div class="fixed-bottom d-flex justify-content-end">
+    <span class='font-monospace text-secondary p-1'>{__APP_VERSION__}</span>
 </div>
