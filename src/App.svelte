@@ -23,6 +23,10 @@
         {/if}
     </div>
     <footer class="mt-auto align-self-end">
+        <a href="https://github.com/anh4n/skyjo" target='_blank' rel='noopener noreferrer'
+           class="link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"
+        >GitHub <i class="bi bi-github"></i>
+        </a>
         <span class='version font-monospace text-secondary'>{__APP_VERSION__}</span>
     </footer>
 </div>
