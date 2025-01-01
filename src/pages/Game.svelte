@@ -16,7 +16,9 @@
         const minValue = Math.min(...Object.values(values));
         let doublePoints = false;
 
-        if (minValue < values[roundClosed]) {
+        const moreThanOnePlayerHasFewestPoints = Object.values(values).filter(v => v === minValue).length > 1;
+
+        if (minValue < values[roundClosed] || minValue === values[roundClosed] && moreThanOnePlayerHasFewestPoints) {
             values[roundClosed] *= 2;
             doublePoints = true;
         }
