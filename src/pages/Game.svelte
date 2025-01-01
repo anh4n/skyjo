@@ -3,6 +3,7 @@
     import EnterDataModal from '../components/EnterDataModal.svelte';
     import { Navigator } from '../navigator.js';
     import { beforeUpdate } from 'svelte';
+    import Popconfirm from '../components/Popconfirm.svelte';
 
     beforeUpdate(() => {
     });
@@ -100,9 +101,13 @@
         Eintragen
     </button>
     <div class='flex-grow-1'></div>
-    <button on:click|preventDefault={onNewGameClick} type="submit" class="btn btn-outline-danger btn-lg">
+    <Popconfirm
+            title='Neues Spiel starten?'
+            description='Soll ein neues Spiel gestartet werden?'
+            onConfirm={onNewGameClick}
+    >
         Neues Spiel
-    </button>
+    </Popconfirm>
 </div>
 
 <EnterDataModal on:enter={onDataEnter}/>
