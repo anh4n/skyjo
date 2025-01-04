@@ -51,7 +51,9 @@ const createPlayerScoreStore = () => {
                         sum: (player.sum || 0) + values[player.id]
                     }));
 
-                localStorage.setItem('players', JSON.stringify(newStore));
+                localStorage.setItem('players', JSON.stringify(
+                    newStore.map(({ id, name, sum }) => ({ id, name, sum }))
+                ));
                 return newStore;
             });
         },
@@ -70,7 +72,7 @@ export const sortedPlayerScoreStore = derived(playersScoreStore, ($store) => {
     let currentRank = 1;
 
     // rank player
-    return store.map((player, index)=> {
+    return store.map((player, index) => {
         if (index > 0 && player.sum !== store[index - 1].sum) {
             currentRank = index + 1;
         }
@@ -78,7 +80,7 @@ export const sortedPlayerScoreStore = derived(playersScoreStore, ($store) => {
         return {
             ...player,
             rank: currentRank
-        }
+        };
     });
 });
 

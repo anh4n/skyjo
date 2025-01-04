@@ -1,6 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import { playersScoreStore } from '../store.js';
+    import { get } from 'svelte/store';
 
     let roundClosed;
 
@@ -15,11 +16,16 @@
         roundClosed = null;
     };
 
+    const onModalRendered = () => {
+        const player = get(playersScoreStore)[0];
+        player.input.focus();
+    };
+
     const onSaveClick = () => {
         const values = {};
 
         $playersScoreStore.forEach(player => {
-            values[player.id] = player.currentValue;
+            values[player.id] = player.currentValue || 0;
         });
 
         dispatch('enter', {
@@ -29,7 +35,13 @@
     };
 </script>
 
-<div class="modal fade" id="dataEnterModal" data-bs-backdrop="static" on:show.bs.modal={onModalOpen}>
+<div
+        class="modal fade"
+        id="dataEnterModal"
+        data-bs-backdrop="static"
+        on:show.bs.modal={onModalOpen}
+        on:shown.bs.modal={onModalRendered}
+>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -51,6 +63,7 @@
                             <th class='align-middle' scope="col">{player.name}</th>
                             <td>
                                 <input bind:value={player.currentValue}
+                                       bind:this={player.input}
                                        class="align-middle form-control"
                                        type="number"
                                        tabindex={player.id}
