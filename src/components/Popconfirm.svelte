@@ -14,7 +14,7 @@
     const modalId = uuidv7();
 </script>
 
-<button class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" data-bs-target="#{modalId}">
+<button class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" data-bs-target="#{modalId}" on:click|preventDefault>
     <slot />
 </button>
 
@@ -32,7 +32,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={onCancel}>
                     {cancelText}
                 </button>
-                <button type="button" class="btn btn-primary" on:click={onConfirm}>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" on:click={onConfirm}>
                     {okText}
                 </button>
             </div>

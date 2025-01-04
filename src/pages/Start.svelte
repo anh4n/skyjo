@@ -2,6 +2,7 @@
     import ListField from '../components/ListField.svelte';
     import { playersScoreStore, roundStore } from '../store.js';
     import { Navigator } from '../navigator.js';
+    import Popconfirm from '../components/Popconfirm.svelte';
 
     let listField;
 
@@ -53,8 +54,12 @@
             Spiel starten
         </button>
         <div class='flex-grow-1'></div>
-        <button on:click|preventDefault={onResetClick} class="btn btn-outline-danger btn-lg">
+        <Popconfirm
+                title='Eingaben zurücksetzen?'
+                description='Sollen alle Spieler zurückgesetzt werden?'
+                onConfirm={onResetClick}
+        >
             Zurücksetzen
-        </button>
+        </Popconfirm>
     </div>
 </form>
