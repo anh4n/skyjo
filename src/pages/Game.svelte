@@ -19,7 +19,11 @@
 
         const moreThanOnePlayerHasFewestPoints = Object.values(values).filter(v => v === minValue).length > 1;
 
-        if (minValue < values[roundClosed] || minValue === values[roundClosed] && moreThanOnePlayerHasFewestPoints) {
+        const closingPlayerHasPositivePoints = () => values[roundClosed] > 0;
+        const closingPlayerHasMorePointsThanOtherPlayer = () => minValue < values[roundClosed];
+        const closingPlayerIsNotTheOnlyOneWithFewestPoints = () => minValue === values[roundClosed] && moreThanOnePlayerHasFewestPoints;
+
+        if (closingPlayerHasPositivePoints() && (closingPlayerHasMorePointsThanOtherPlayer() || closingPlayerIsNotTheOnlyOneWithFewestPoints())) {
             values[roundClosed] *= 2;
             doublePoints = true;
         }
