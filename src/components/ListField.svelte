@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
 
     export let minFields = null;
     export let maxFields = null;
@@ -24,7 +24,7 @@
         }
     });
 
-    const addField = () => {
+    const addField = async () => {
         if (canHaveMoreFields) {
             const lastField = value[value.length - 1];
             const id = lastField ? value[value.length - 1].id + 1 : 1;
@@ -32,6 +32,9 @@
                 ...value,
                 { id, placeholder: `${placeholderPrefix} ${id}`, value: '' }
             ];
+            const index = value.findIndex(field => field.id === id);
+            await tick();
+            value[index].input.focus();
         }
     };
 
@@ -46,10 +49,16 @@
         }
     };
 
-    const handleKeyPress = (e) => {
+    const handleKeyPress = (id, e) => {
         if ('Enter' === e.key) {
-            addField();
             e.preventDefault();
+            const lastField = value[value.length - 1];
+            if (id === lastField.id) {
+                addField();
+            } else {
+                const index = value.findIndex(field => field.id === id);
+                value[index + 1].input.focus();
+            }
         }
     };
 </script>
@@ -60,8 +69,8 @@
             <input
                     bind:value={field.value}
                     placeholder={field.placeholder}
-                    on:keypress={handleKeyPress}
-                    autofocus
+                    on:keypress={handleKeyPress.bind(null, field.id)}
+                    bind:this={field.input}
                     type="text"
                     class="form-control"
                     tabindex={field.id}
