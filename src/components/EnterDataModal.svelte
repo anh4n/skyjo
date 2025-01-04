@@ -29,7 +29,7 @@
     };
 </script>
 
-<div class="modal fade" id="dataEnterModal" on:show.bs.modal={onModalOpen}>
+<div class="modal fade" id="dataEnterModal" data-bs-backdrop="static" on:show.bs.modal={onModalOpen}>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

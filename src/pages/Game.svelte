@@ -1,5 +1,5 @@
 <script>
-    import { playersScoreStore, roundStore } from '../store.js';
+    import { playersScoreStore, roundStore, sortedPlayerScoreStore } from '../store.js';
     import EnterDataModal from '../components/EnterDataModal.svelte';
     import { Navigator } from '../navigator.js';
     import { beforeUpdate } from 'svelte';
@@ -43,7 +43,7 @@
     <thead>
     <tr>
         <th scope="col">#</th>
-        {#each $playersScoreStore as player (player.id)}
+        {#each $sortedPlayerScoreStore as player, index (player.id)}
             <th scope="col" class='text-end'>
                 {player.name}
                 {#if $roundStore.length > 0}
@@ -63,18 +63,18 @@
     {#each $roundStore as round, index}
         <tr>
             <th scope="row">{index + 1}</th>
-            {#each Object.keys(round.values) as playerId}
+            {#each $sortedPlayerScoreStore as player (player.id)}
                 <td>
                     <div class='d-flex justify-content-end'>
                         <div
                                 class='text-end points'
-                                class:text-primary={checkCloser(playerId, index) && !round.doublePoints}
-                                class:text-danger={checkCloser(playerId, index) && round.doublePoints}
+                                class:text-primary={checkCloser(player.id, index) && !round.doublePoints}
+                                class:text-danger={checkCloser(player.id, index) && round.doublePoints}
                         >
-                            {round.values[playerId]}
+                            {round.values[player.id]}
                         </div>
                         <div style='width: 35px' class='text-end'>
-                            {#if checkCloser(playerId, index) && round.doublePoints}({round.values[playerId] / 2}){/if}
+                            {#if checkCloser(player.id, index) && round.doublePoints}({round.values[player.id] / 2}){/if}
                         </div>
                     </div>
                 </td>
@@ -85,7 +85,7 @@
     <tfoot class='table-group-divider'>
     <tr>
         <th scope="col">Summe</th>
-        {#each $playersScoreStore as player (player.id)}
+        {#each $sortedPlayerScoreStore as player (player.id)}
             <td>
                 <div class='d-flex justify-content-end'>
                     <div class='text-end fw-bold points' class:text-bg-danger={player.sum >= 100}>
