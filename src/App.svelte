@@ -3,11 +3,16 @@
     import GamePage from './pages/Game.svelte';
     import { playersScoreStore, roundStore } from './store.js';
     import { Navigator } from './navigator.js';
+    import { get } from 'svelte/store';
 
     playersScoreStore.init();
     roundStore.init();
 
-    const page = Navigator.getPage();
+    let page = Navigator.getPage();
+
+    if (page === 'start' && get(roundStore).length > 0) {
+        page = Navigator.setPage('game');
+    }
 </script>
 
 <div class='d-flex flex-column min-vh-100'>

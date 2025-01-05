@@ -2,13 +2,10 @@
     import { playersScoreStore, roundStore, sortedPlayerScoreStore } from '../store.js';
     import EnterDataModal from '../components/EnterDataModal.svelte';
     import { Navigator } from '../navigator.js';
-    import { beforeUpdate } from 'svelte';
     import Popconfirm from '../components/Popconfirm.svelte';
 
-    beforeUpdate(() => {
-    });
-
     const onNewGameClick = () => {
+        roundStore.reset();
         Navigator.setPage('start');
     };
 

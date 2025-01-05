@@ -20,8 +20,7 @@
         const playersValues = players.map(player => ({
             id: player.id,
             name: player.value || player.placeholder,
-            sum: 0,
-            rank: 0
+            sum: 0
         }));
         playersScoreStore.setPlayers(playersValues);
         roundStore.reset();
