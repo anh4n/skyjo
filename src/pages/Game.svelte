@@ -39,18 +39,25 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">#</th>
-        {#each $sortedPlayerScoreStore as player, index (player.id)}
+        <th scope="col"></th>
+        {#each $sortedPlayerScoreStore as player (player.id)}
             <th scope="col" class='text-end'>
                 {player.name}
+            </th>
+        {/each}
+    </tr>
+    <tr>
+        <th scope="col">#</th>
+        {#each $sortedPlayerScoreStore as player (player.id)}
+            <th scope="col" class='text-end rank'>
                 {#if $roundStore.length > 0}
-                    <span
-                            class="badge rounded-pill "
-                            class:first-place={player.rank === 1}
-                            class:second-place={player.rank === 2}
-                            class:third-place={player.rank === 3}
-                            class:text-bg-dark={player.rank > 3}
-                    >{player.rank}.</span>
+                            <span
+                                    class="badge rounded-pill "
+                                    class:first-place={player.rank === 1}
+                                    class:second-place={player.rank === 2}
+                                    class:third-place={player.rank === 3}
+                                    class:text-bg-dark={player.rank > 3}
+                            >{player.rank}.</span>
                 {/if}
             </th>
         {/each}
@@ -71,7 +78,8 @@
                             {round.values[player.id]}
                         </div>
                         <div style='width: 35px' class='text-end'>
-                            {#if checkCloser(player.id, index) && round.doublePoints}({round.values[player.id] / 2}){/if}
+                            {#if checkCloser(player.id, index) && round.doublePoints}({round.values[player.id] / 2})
+                            {/if}
                         </div>
                     </div>
                 </td>
