@@ -1,12 +1,11 @@
 <script>
-    import ListField from '../components/ListField.svelte';
+    import ListField from '@components/ListField.svelte';
     import { playersScoreStore, roundStore } from '../store.js';
-    import { Navigator } from '../navigator.js';
-    import Popconfirm from '../components/Popconfirm.svelte';
+    import { Navigator, Page } from '../navigator.svelte.js';
+    import PopConfirm from '@components/PopConfirm.svelte';
 
-    let listField;
-
-    let players = [];
+    let listField = $state();
+    let players = $state([]);
 
     if ($playersScoreStore.length > 0) {
         players = $playersScoreStore.map(player => ({
@@ -16,7 +15,8 @@
         }));
     }
 
-    const startGame = () => {
+    const startGame = (event) => {
+        event.preventDefault();
         const playersValues = players.map(player => ({
             id: player.id,
             name: player.value || player.placeholder,
@@ -24,7 +24,7 @@
         }));
         playersScoreStore.setPlayers(playersValues);
         roundStore.reset();
-        Navigator.setPage('game');
+        Navigator.setPage(Page.GAME);
     };
 
     const onResetClick = () => {
@@ -49,16 +49,18 @@
             maxFields=8
     />
     <div class="d-flex mb-3">
-        <button on:click|preventDefault={startGame} type="submit" class="btn btn-outline-success btn-lg">
+        <button onclick={startGame} type="submit" class="btn btn-outline-success btn-lg">
             Spiel starten
         </button>
         <div class='flex-grow-1'></div>
-        <Popconfirm
+        <PopConfirm
                 title='Eingaben zurücksetzen?'
                 description='Sollen alle Spieler zurückgesetzt werden?'
                 onConfirm={onResetClick}
         >
             Zurücksetzen
-        </Popconfirm>
+        </PopConfirm>
     </div>
 </form>
+
+

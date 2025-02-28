@@ -1,16 +1,15 @@
 <script>
     import { playersScoreStore, roundStore, sortedPlayerScoreStore } from '../store.js';
-    import EnterDataModal from '../components/EnterDataModal.svelte';
-    import { Navigator } from '../navigator.js';
-    import Popconfirm from '../components/Popconfirm.svelte';
+    import EnterDataModal from '@components/EnterDataModal.svelte';
+    import { Navigator, Page } from '../navigator.svelte.js';
+    import PopConfirm from '@components/PopConfirm.svelte';
 
     const onNewGameClick = () => {
         roundStore.reset();
-        Navigator.setPage('start');
+        Navigator.setPage(Page.START);
     };
 
-    const onDataEnter = (e) => {
-        const { roundClosed, values } = e.detail;
+    const onDataEnter = ({roundClosed, values}) => {
         const minValue = Math.min(...Object.values(values));
         let doublePoints = false;
 
@@ -110,13 +109,13 @@
         Eintragen
     </button>
     <div class='flex-grow-1'></div>
-    <Popconfirm
+    <PopConfirm
             title='Neues Spiel starten?'
             description='Soll ein neues Spiel gestartet werden?'
             onConfirm={onNewGameClick}
     >
         Neues Spiel
-    </Popconfirm>
+    </PopConfirm>
 </div>
 
-<EnterDataModal on:enter={onDataEnter}/>
+<EnterDataModal onSave={onDataEnter}/>

@@ -1,11 +1,10 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
     import { playersScoreStore } from '../store.js';
     import { get } from 'svelte/store';
 
-    let roundClosed;
+    let roundClosed = $state();
 
-    const dispatch = createEventDispatcher();
+    const { onSave } = $props();
 
     const onModalOpen = () => {
         playersScoreStore.update(store =>
@@ -21,17 +20,15 @@
         player.input.focus();
     };
 
-    const onSaveClick = () => {
+    const onSaveClick = (event) => {
+        event.preventDefault();
         const values = {};
 
         $playersScoreStore.forEach(player => {
             values[player.id] = player.currentValue || 0;
         });
 
-        dispatch('enter', {
-            roundClosed,
-            values
-        });
+        onSave({ roundClosed, values });
     };
 </script>
 
@@ -39,8 +36,8 @@
         class="modal fade"
         id="dataEnterModal"
         data-bs-backdrop="static"
-        on:show.bs.modal={onModalOpen}
-        on:shown.bs.modal={onModalRendered}
+        onshow.bs.modal={onModalOpen}
+        onshown.bs.modal={onModalRendered}
 >
     <div class="modal-dialog">
         <div class="modal-content">
@@ -82,7 +79,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button on:click|preventDefault={onSaveClick} type="button" data-bs-dismiss="modal"
+                <button onclick={onSaveClick} type="button" data-bs-dismiss="modal"
                         class="btn btn-primary">Speichern
                 </button>
             </div>

@@ -1,22 +1,34 @@
 <script>
     import { onMount, tick } from 'svelte';
 
-    export let minFields = null;
-    export let maxFields = null;
-    export let addText = 'Add field';
-    export let placeholderPrefix = 'Field';
     const createDefaultValue = () => ([
         { id: 1, placeholder: `${placeholderPrefix} 1`, value: '' },
         { id: 2, placeholder: `${placeholderPrefix} 2`, value: '' },
         { id: 3, placeholder: `${placeholderPrefix} 3`, value: '' }
     ]);
-    export let value = createDefaultValue();
+    /**
+     * @typedef {Object} Props
+     * @property {any} [minFields]
+     * @property {any} [maxFields]
+     * @property {string} [addText]
+     * @property {string} [placeholderPrefix]
+     * @property {any} [value]
+     */
+
+    /** @type {Props} */
+    let {
+        minFields = null,
+        maxFields = null,
+        addText = 'Add field',
+        placeholderPrefix = 'Field',
+        value = $bindable(createDefaultValue())
+    } = $props();
     export const reset = () => {
-         value = createDefaultValue();
+        value = createDefaultValue();
     };
 
-    $: canHaveMoreFields = maxFields === null || value.length < maxFields;
-    $: canHaveLessFields = minFields === null || value.length > minFields;
+    let canHaveMoreFields = $derived(maxFields === null || value.length < maxFields);
+    let canHaveLessFields = $derived(minFields === null || value.length > minFields);
 
     onMount(() => {
         if (value.length === 0) {
@@ -69,7 +81,7 @@
             <input
                     bind:value={field.value}
                     placeholder={field.placeholder}
-                    on:keypress={handleKeyPress.bind(null, field.id)}
+                    onkeydown={handleKeyPress.bind(null, field.id)}
                     bind:this={field.input}
                     type="text"
                     class="form-control"
@@ -77,7 +89,7 @@
             />
             {#if canHaveLessFields}
                 <button
-                        on:click={removeField.bind(null, field.id)}
+                        onclick={removeField.bind(null, field.id)}
                         type="button"
                         class="btn"
                 >
@@ -88,7 +100,7 @@
     </div>
 {/each}
 <div class="mb-3 d-grid gap-2">
-    <button on:click={addField} disabled={!canHaveMoreFields} type="button"
+    <button onclick={addField} disabled={!canHaveMoreFields} type="button"
             class="btn btn-outline-secondary add-player-button">
         {addText}
     </button>

@@ -1,5 +1,5 @@
 {
-  "name": "skyjo-svelte",
+  "name": "skyjo-calculator",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "3.1.2",
+    "@sveltejs/vite-plugin-svelte": "4.0.4",
     "sass": "1.83.1",
-    "svelte": "4.2.19",
-    "vite": "5.4.11"
+    "svelte": "5.20.5",
+    "vite": "5.4.14"
   },
   "dependencies": {
     "@popperjs/core": "2.11.8",
