@@ -5,6 +5,7 @@
     import { Navigator, Page } from './navigator.svelte.js';
     import { get } from 'svelte/store';
     import { onMount } from 'svelte';
+    import BuyMeACoffee from '@components/BuyMeACoffee.svelte';
 
     playersScoreStore.init();
     roundStore.init();
@@ -26,12 +27,16 @@
         {:else if Navigator.isCurrentPage(Page.GAME)}
             <GamePage/>
         {/if}
+        <div class='text-center p-1'>
+            <BuyMeACoffee/>
+        </div>
     </div>
-    <footer class="mt-auto align-self-end">
+
+    <footer class="">
         <a href="https://github.com/anh4n/skyjo" target='_blank' rel='noopener noreferrer'
-           class="link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"
+           class="github link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"
         >GitHub <i class="bi bi-github"></i>
         </a>
-        <span class='version font-monospace text-secondary'>{__APP_VERSION__}</span>
+        <span class='font-monospace text-secondary'>{__APP_VERSION__}</span>
     </footer>
 </div>

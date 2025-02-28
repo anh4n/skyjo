@@ -5,8 +5,13 @@ body {
   background-color: #fcfcfc;
 }
 
-footer .version {
-  padding: 10px 25px;
+footer {
+  display: flex;
+  padding: 10px 30px;
+
+  .github {
+    flex: 1;
+  }
 }
 
 .add-player-button {

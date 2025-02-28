@@ -83,4 +83,3 @@ export const sortedPlayerScoreStore = derived(playersScoreStore, ($store) => {
         };
     });
 });
-
