@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <footer class="">
+    <footer class="mt-auto">
         <a href="https://github.com/anh4n/skyjo" target='_blank' rel='noopener noreferrer'
            class="github link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"
         >GitHub <i class="bi bi-github"></i>
