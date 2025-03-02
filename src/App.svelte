@@ -6,11 +6,16 @@
     import { get } from 'svelte/store';
     import { onMount } from 'svelte';
     import BuyMeACoffee from '@components/BuyMeACoffee.svelte';
+    import { initTranslations } from './translations/translate.svelte.js';
 
     playersScoreStore.init();
     roundStore.init();
 
-    onMount(() => {
+    const { locale } = $props();
+
+    onMount(async () => {
+        await initTranslations(['en', 'de'], locale);
+
         if (Navigator.isCurrentPage(Page.START) && get(roundStore).length > 0) {
             Navigator.setPage(Page.GAME);
         }

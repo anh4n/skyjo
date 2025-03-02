@@ -3,6 +3,7 @@
     import { playersScoreStore, roundStore } from '../store.js';
     import { Navigator, Page } from '../navigator.svelte.js';
     import PopConfirm from '@components/PopConfirm.svelte';
+    import { _ } from '../translations/translate.svelte.js';
 
     let listField = $state();
     let players = $state([]);
@@ -35,22 +36,22 @@
 </script>
 
 <div class='text-center pb-3'>
-    <span class='badge text-bg-secondary'>Alter: ab 8 Jahren</span>
-    <span class='badge text-bg-secondary'>Spieler: 2 bis 8</span>
-    <span class='badge text-bg-secondary'>Dauer: 15-45 Minuten</span>
+    <span class='badge text-bg-secondary'>{_('game.age')}</span>
+    <span class='badge text-bg-secondary'>{_('game.player')}</span>
+    <span class='badge text-bg-secondary'>{_('game.duration')}</span>
 </div>
 <form>
     <ListField
             bind:value={players}
-            addText='Spieler hinzufügen'
-            placeholderPrefix='Spieler'
+            addText={_('listfield.add.player')}
+            placeholderPrefix={_('listfield.placeholder.prefix')}
             bind:this={listField}
             minFields=2
             maxFields=8
     />
     <div class="d-flex mb-3">
         <button onclick={startGame} type="submit" class="btn btn-outline-success btn-lg">
-            Spiel starten
+            {_('start.game')}
         </button>
         <div class='flex-grow-1'></div>
         <PopConfirm
@@ -58,7 +59,7 @@
                 description='Sollen alle Spieler zurückgesetzt werden?'
                 onConfirm={onResetClick}
         >
-            Zurücksetzen
+            {_('reset.game')}
         </PopConfirm>
     </div>
 </form>

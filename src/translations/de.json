@@ -1,0 +1,9 @@
+{
+  "start.game": "Spiel starten",
+  "reset.game": "Zurücksetzen",
+  "game.age": "Alter: ab 8 Jahren",
+  "game.player": "Spieler: 2 bis 8",
+  "game.duration": "Dauer: 15-45 Minuten",
+  "listfield.add.player": "Spieler hinzufügen",
+  "listfield.placeholder.prefix": "Spieler"
+}
