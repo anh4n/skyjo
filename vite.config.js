@@ -10,10 +10,10 @@ export default defineConfig({
     resolve: {
         alias: {
             '@components': path.resolve(__dirname, 'src/components/'),
-            '@pages': path.resolve(__dirname, 'src/pages/'),
+            '@pages': path.resolve(__dirname, 'src/pages/')
         }
     },
     server: {
-        host: '127.0.0.1',
+        host: '127.0.0.1'
     }
 });
