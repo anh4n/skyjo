@@ -25,10 +25,10 @@
     "checkJs": true,
     "paths": {
       "@components/*": [
-        "src/components/*"
+        "./src/components/*"
       ],
       "@pages/*": [
-        "src/pages/*"
+        "./src/pages/*"
       ]
     }
   },

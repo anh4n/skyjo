@@ -12,5 +12,8 @@ export default defineConfig({
             '@components': path.resolve(__dirname, 'src/components/'),
             '@pages': path.resolve(__dirname, 'src/pages/'),
         }
+    },
+    server: {
+        host: '127.0.0.1',
     }
 });
