@@ -9,7 +9,8 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "svelte.enable-ts-plugin": true
       },
       "extensions": [
         "svelte.svelte-vscode",
@@ -17,6 +18,7 @@
         "github.vscode-github-actions",
         "github.copilot",
         "github.copilot-chat",
+        "github.vscode-pull-request-github",
         "esbenp.prettier-vscode"
       ]
     },
