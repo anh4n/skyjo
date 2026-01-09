@@ -3,6 +3,7 @@
     import EnterDataModal from '@components/EnterDataModal.svelte';
     import { Navigator, Page } from '../navigator.svelte.js';
     import PopConfirm from '@components/PopConfirm.svelte';
+    import CameraModal from '@components/CameraModal.svelte';
 
     const onNewGameClick = () => {
         roundStore.reset();
@@ -108,6 +109,10 @@
             data-bs-toggle="modal" data-bs-target="#dataEnterModal">
         Eintragen
     </button>
+    <button class="btn btn-outline-primary btn-lg"
+            data-bs-toggle="modal" data-bs-target="#fotoModal">
+        Foto
+    </button>
     <div class='flex-grow-1'></div>
     <PopConfirm
             title='Neues Spiel starten?'
@@ -119,3 +124,4 @@
 </div>
 
 <EnterDataModal onSave={onDataEnter}/>
+<CameraModal />

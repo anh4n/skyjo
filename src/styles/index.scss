@@ -1,5 +1,5 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
-@import "bootstrap-icons/font/bootstrap-icons.min.css";
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.min.css';
 
 body {
   background-color: #fcfcfc;
@@ -37,6 +37,13 @@ footer {
 }
 
 .third-place {
-  background-color: #CD7F32;
+  background-color: #cd7f32;
   color: black;
+}
+
+#fotoModal {
+  .modal-body, .modal-footer {
+    display: flex;
+    justify-content: center;
+  }
 }
