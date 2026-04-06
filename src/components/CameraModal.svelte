@@ -20,7 +20,7 @@
         canvasEl.getContext('2d').drawImage(videoEl, 0, 0);
 
         canvasEl.toBlob((blob) => {
-            fetch('/ocr', {
+            fetch('http://127.0.0.1:3000/orc', {
                 method: 'POST',
                 body: blob
             });

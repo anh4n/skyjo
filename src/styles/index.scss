@@ -5,6 +5,12 @@ body {
   background-color: #fcfcfc;
 }
 
+#app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
 footer {
   display: flex;
   padding: 10px 30px;

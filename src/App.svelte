@@ -17,29 +17,27 @@
     });
 </script>
 
-<div class="d-flex flex-column min-vh-100">
-    <div class="container">
-        <div class="text-center p-1">
-            <img src="/logo.jpeg" alt="logo" style="max-height: 50px" />
-        </div>
-        {#if Navigator.isCurrentPage(Page.START)}
-            <StartPage />
-        {:else if Navigator.isCurrentPage(Page.GAME)}
-            <GamePage />
-        {/if}
-        <div class="text-center p-1">
-            <BuyMeACoffee />
-        </div>
+<div class="container">
+    <div class="text-center p-1">
+        <img src="/logo.jpeg" alt="logo" style="max-height: 50px" />
     </div>
-
-    <footer class="mt-auto">
-        <a
-            href="https://github.com/anh4n/skyjo"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="github link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"
-            >GitHub <i class="bi bi-github"></i>
-        </a>
-        <span class="font-monospace text-secondary">{__APP_VERSION__}</span>
-    </footer>
+    {#if Navigator.isCurrentPage(Page.START)}
+        <StartPage />
+    {:else if Navigator.isCurrentPage(Page.GAME)}
+        <GamePage />
+    {/if}
+    <div class="text-center p-1">
+        <BuyMeACoffee />
+    </div>
 </div>
+
+<footer class="mt-auto">
+    <a
+        href="https://github.com/anh4n/skyjo"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="github link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"
+        >GitHub <i class="bi bi-github"></i>
+    </a>
+    <span class="font-monospace text-secondary">{__APP_VERSION__}</span>
+</footer>
